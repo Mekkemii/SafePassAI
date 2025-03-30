@@ -207,6 +207,23 @@ def handle_query(message):
 
     bot.send_message(chat_id=message.chat.id, text=response, reply_markup=get_inline_main_menu())
 
+# --- Keep Alive Server (для UptimeRobot) ---
+from threading import Thread
+from flask import Flask
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "I'm alive!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+t = Thread(target=run)
+t.start()
+
+
 # Запуск бота
 if __name__ == '__main__':
     logger.info("Бот запущен...")
